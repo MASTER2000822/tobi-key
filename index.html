@@ -2,50 +2,305 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tobi Panel key</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#08090b">
+<title>Tobi Panel | Supply Drop Key</title>
+<meta name="description" content="Get your Tobi Panel key. A supply drop is on its way.">
 <!--
-  Static page for GitHub Pages (or any web host): no server, no cookies.
-  After a short countdown it shows a key for Tobi Panel. The key says when it stops working and carries a signature that
-  the app (Emulator/KeyGate.h) checks without a server.
+  Static page for GitHub Pages (or any web host): no server, no cookies, no tracking.
+  A short countdown (an airdrop coming down), then a key for Tobi Panel. The key says when it stops working and carries a
+  signature that the app (Emulator/KeyGate.h) checks without a server.
   SECRET must be the same text as kSecret in KeyGate.h.
   The script is public, so anyone can read it and make keys: this is a speed bump, not protection.
+  Fan-made look: all art is drawn here in SVG / CSS. Not affiliated with or endorsed by the owners of Naruto or PUBG MOBILE.
 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
 <style>
-  :root { color-scheme: dark; --bg:#17171c; --card:#222229; --line:#34343e; --text:#f2f2f5; --dim:#9a9aa6; --accent:#0a84ff; }
-  * { box-sizing: border-box; }
-  body { margin:0; min-height:100vh; display:grid; place-items:center; background:radial-gradient(1200px 600px at 20% 0%, #2a2140 0%, var(--bg) 55%); color:var(--text);
-         font:16px/1.45 -apple-system, "Segoe UI", system-ui, sans-serif; padding:24px; }
-  .card { width:min(480px,100%); background:var(--card); border:1px solid var(--line); border-radius:18px; padding:28px; box-shadow:0 20px 60px rgba(0,0,0,.45); }
-  h1 { font-size:22px; margin:0 0 6px; }
-  p { margin:0 0 18px; color:var(--dim); }
-  .bar { height:8px; background:#2c2c35; border-radius:99px; overflow:hidden; margin:6px 0 10px; }
-  .bar > i { display:block; height:100%; width:0; background:var(--accent); transition:width .25s linear; }
-  .key { font:600 20px/1.3 ui-monospace, Consolas, monospace; letter-spacing:.04em; text-align:center; background:#15151a; border:1px solid var(--line);
-         border-radius:12px; padding:16px 10px; user-select:all; word-break:break-all; }
-  button { width:100%; margin-top:14px; padding:12px; border:0; border-radius:12px; font:600 16px system-ui,sans-serif; background:var(--accent); color:#fff; cursor:pointer; }
-  button:active { filter:brightness(.9); }
-  .small { font-size:13px; color:var(--dim); margin-top:14px; text-align:center; }
+  :root {
+    --bg:#07080a; --panel:#0f1115; --panel2:#14171c; --line:#262a31; --text:#f1f2f4; --dim:#9aa1ab;
+    --orange:#ff7a1a; --orange2:#ff9d3d; --red:#e5252a; --gold:#ffc21a; --olive:#6f8a3c;
+    --display:"Orbitron","Bahnschrift","Segoe UI",system-ui,sans-serif;
+    --body:"Rajdhani","Bahnschrift","Segoe UI",system-ui,sans-serif;
+    --p:0;
+  }
+  * { box-sizing:border-box; }
+  html,body { margin:0; background:var(--bg); color:var(--text); font-family:var(--body); font-size:18px; line-height:1.4; -webkit-font-smoothing:antialiased; }
+  body { min-height:100vh; overflow-x:hidden; position:relative; }
+  #vortex { position:fixed; inset:0; width:100%; height:100%; z-index:0; }
+  .shade { position:fixed; inset:0; z-index:1; pointer-events:none;
+    background:radial-gradient(ellipse at 50% 35%, transparent 0%, rgba(7,8,10,.55) 55%, rgba(7,8,10,.95) 100%),
+               repeating-linear-gradient(0deg, rgba(255,255,255,.025) 0 1px, transparent 1px 3px); }
+  .wrap { position:relative; z-index:2; width:min(1120px, 100% - 32px); margin:0 auto; padding:18px 0 40px; }
+
+  /* the artwork behind the top of the page */
+  .art { position:absolute; top:0; left:0; right:0; height:min(100vh, 820px); z-index:1; pointer-events:none;
+         background:url("assets/tobi.webp") 0% 12% / cover no-repeat; opacity:.97;
+         -webkit-mask-image:linear-gradient(to bottom, #000 62%, transparent 100%); mask-image:linear-gradient(to bottom, #000 62%, transparent 100%); }
+  .art::before { content:""; position:absolute; inset:0;
+         background:linear-gradient(90deg, rgba(7,8,10,.97) 0%, rgba(7,8,10,.86) 34%, rgba(7,8,10,.38) 64%, rgba(7,8,10,.08) 100%),
+                    linear-gradient(0deg, rgba(7,8,10,.9) 0%, transparent 38%); }
+  .art::after { content:""; position:absolute; inset:0; background:radial-gradient(ellipse at 72% 40%, rgba(255,122,26,.10), transparent 55%); mix-blend-mode:screen; }
+
+  /* top bar */
+  .top { display:flex; align-items:center; gap:12px; padding:10px 0 22px; }
+  .brand { display:flex; align-items:center; gap:12px; font:800 18px var(--display); letter-spacing:.14em; text-transform:uppercase; }
+  .brand svg { width:40px; height:40px; filter:drop-shadow(0 0 10px rgba(255,122,26,.55)); }
+  .chips { margin-left:auto; display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
+  .chip { font:700 12px var(--display); letter-spacing:.12em; padding:6px 10px; border:1px solid var(--line); background:rgba(15,17,21,.7); border-radius:4px; color:var(--dim); text-transform:uppercase; }
+  .chip.hot { color:#1a1100; background:var(--gold); border-color:var(--gold); }
+  .chip.red { color:#fff; background:rgba(229,37,42,.18); border-color:rgba(229,37,42,.6); }
+
+  /* hero */
+  .hero { display:block; padding:30px 0 40px; min-height:min(56vh, 460px); }
+  .hero > div { max-width:560px; }
+  .cta { display:flex; gap:12px; flex-wrap:wrap; margin-top:26px; }
+  .cta .btn { flex:0 1 auto; min-width:200px; text-align:center; text-decoration:none; display:inline-block; }
+  .kicker { display:inline-flex; align-items:center; gap:10px; font:700 13px var(--display); letter-spacing:.22em; color:var(--orange2); text-transform:uppercase; }
+  .kicker i { width:34px; height:2px; background:var(--orange); display:block; }
+  h1 { margin:12px 0 10px; font:800 clamp(34px, 6vw, 64px)/1.02 var(--display); letter-spacing:.02em; text-transform:uppercase; }
+  h1 em { font-style:normal; color:transparent; background:linear-gradient(95deg,var(--orange),var(--red) 70%); -webkit-background-clip:text; background-clip:text; }
+  .sub { color:var(--dim); font-size:20px; max-width:30ch; margin:0 0 22px; }
+  .quote { border-left:3px solid var(--orange); padding:4px 0 4px 14px; color:#d9dce1; font-size:17px; max-width:44ch; }
+  .quote b { color:var(--orange2); font-weight:700; }
+  .maskbox { display:none; }
+  .maskbox svg.mask { width:min(320px, 80%); filter:drop-shadow(0 18px 50px rgba(255,122,26,.35)); animation:float 6s ease-in-out infinite; }
+  .maskbox .ring { position:absolute; width:min(430px, 96%); aspect-ratio:1; border-radius:50%; border:1px dashed rgba(255,122,26,.35); animation:spin 40s linear infinite; }
+  .maskbox .ring.two { width:min(360px, 82%); border-color:rgba(229,37,42,.35); animation-duration:26s; animation-direction:reverse; }
+  @keyframes float { 50% { transform:translateY(-10px) rotate(-1.2deg); } }
+  @keyframes spin { to { transform:rotate(360deg); } }
+
+  /* the drop panel */
+  .panel { position:relative; background:linear-gradient(180deg, rgba(20,23,28,.92), rgba(12,14,17,.94)); border:1px solid var(--line); padding:22px; border-radius:6px;
+           box-shadow:0 30px 90px rgba(0,0,0,.55); }
+  .panel::before, .panel::after, .panel i.c1, .panel i.c2 { content:""; position:absolute; width:22px; height:22px; border:2px solid var(--orange); }
+  .panel::before { top:-2px; left:-2px; border-right:0; border-bottom:0; }
+  .panel::after  { top:-2px; right:-2px; border-left:0; border-bottom:0; }
+  .panel i.c1 { bottom:-2px; left:-2px; border-right:0; border-top:0; }
+  .panel i.c2 { bottom:-2px; right:-2px; border-left:0; border-top:0; }
+  .hud { display:flex; align-items:center; gap:14px; flex-wrap:wrap; font:700 12px var(--display); letter-spacing:.16em; text-transform:uppercase; color:var(--dim); }
+  .hud b { color:var(--text); }
+  .dot { width:9px; height:9px; border-radius:50%; background:var(--gold); box-shadow:0 0 12px var(--gold); animation:blink 1s steps(2) infinite; }
+  .landed .dot { background:var(--olive); box-shadow:0 0 12px var(--olive); animation:none; }
+  @keyframes blink { 50% { opacity:.25; } }
+  .eta { margin-left:auto; font:800 26px var(--display); color:var(--gold); letter-spacing:.06em; }
+  .landed .eta { color:#9bd04a; }
+
+  .scene { position:relative; height:340px; margin:14px 0 8px; overflow:hidden; border-radius:4px;
+           background:linear-gradient(180deg, #14181d 0%, #0d1014 78%, #1a1d16 78.2%, #11140d 100%); border:1px solid var(--line); }
+  .scene .stars { position:absolute; inset:0; background-image:radial-gradient(1px 1px at 12% 18%, #fff8 50%, transparent 52%), radial-gradient(1px 1px at 38% 32%, #fff6 50%, transparent 52%),
+     radial-gradient(1.5px 1.5px at 66% 14%, #fff9 50%, transparent 52%), radial-gradient(1px 1px at 84% 36%, #fff7 50%, transparent 52%), radial-gradient(1px 1px at 52% 8%, #fff6 50%, transparent 52%); }
+  .scene .ground { position:absolute; left:0; right:0; bottom:0; height:22%; background:repeating-linear-gradient(90deg, rgba(111,138,60,.18) 0 2px, transparent 2px 22px); }
+  .drop { position:absolute; left:50%; top:8px; width:124px; margin-left:-62px; transform:translateY(calc(var(--p) * 142px)); transition:none; }
+  .landed .drop { transform:translateY(142px); }
+  .drop svg { width:100%; display:block; overflow:visible; }
+  .sway { transform-origin:50% 0; animation:sway 2.6s ease-in-out infinite; }
+  .landed .sway { animation:none; }
+  .landed .canopy, .landed .lines { opacity:0; transform:translateY(-14px); transition:opacity .5s, transform .6s; }
+  @keyframes sway { 50% { transform:rotate(2.2deg); } 0%,100% { transform:rotate(-2.2deg); } }
+  .smoke { position:absolute; left:50%; bottom:18px; width:150px; height:60px; margin-left:-75px; border-radius:50%; background:radial-gradient(ellipse, rgba(255,194,26,.55), transparent 70%); opacity:0; }
+  .landed .smoke { opacity:1; animation:puff 2.2s ease-out forwards; }
+  @keyframes puff { from { transform:scale(.3); opacity:.9; } to { transform:scale(2.6); opacity:0; } }
+  .lid { transform-origin:12px 0; transition:transform .7s cubic-bezier(.2,1.4,.4,1); }
+  .landed .lid { transform:rotate(-58deg) translateY(-4px); }
+  .glow { opacity:0; transition:opacity .6s .2s; }
+  .landed .glow { opacity:1; }
+
+  .seg { display:grid; grid-template-columns:repeat(16,1fr); gap:4px; margin:12px 0 4px; }
+  .seg i { height:9px; background:#232830; transform:skewX(-20deg); transition:background .15s, box-shadow .15s; }
+  .seg i.on { background:var(--orange); box-shadow:0 0 10px rgba(255,122,26,.6); }
+  .landed .seg i { background:#8bbf3c; box-shadow:0 0 8px rgba(139,191,60,.5); }
+  .status { min-height:1.4em; color:var(--dim); font-size:16px; letter-spacing:.04em; }
+
+  .reveal { display:none; margin-top:14px; }
+  .landed .reveal { display:block; animation:rise .6s cubic-bezier(.2,.9,.3,1) both; }
+  @keyframes rise { from { opacity:0; transform:translateY(16px) scale(.98); } }
+  .keybox { position:relative; text-align:center; padding:18px 12px; border:1px solid rgba(255,194,26,.45); background:linear-gradient(180deg, rgba(255,194,26,.07), rgba(255,122,26,.03)); border-radius:4px; }
+  .keybox small { display:block; font:700 11px var(--display); letter-spacing:.3em; color:var(--gold); margin-bottom:8px; }
+  .key { font:800 clamp(18px, 4.2vw, 28px)/1.25 var(--display); letter-spacing:.06em; user-select:all; word-break:break-all; text-shadow:0 0 18px rgba(255,122,26,.35); }
+  .actions { display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; }
+  .btn { appearance:none; border:0; cursor:pointer; flex:1 1 180px; padding:13px 18px; font:800 14px var(--display); letter-spacing:.16em; text-transform:uppercase; color:#1a0d00;
+         background:linear-gradient(180deg, var(--orange2), var(--orange)); clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px); transition:filter .15s, transform .1s; }
+  .btn:hover { filter:brightness(1.1); } .btn:active { transform:translateY(1px); }
+  .btn.ghost { color:var(--text); background:#1c2027; box-shadow:inset 0 0 0 1px var(--line); }
+  .until { margin-top:10px; color:var(--dim); font-size:16px; text-align:center; }
+
+  /* download */
+  .dl { margin-top:22px; }
+  .dlcard { position:relative; display:grid; grid-template-columns:1.2fr .8fr; gap:24px; align-items:center; padding:24px;
+            background:linear-gradient(135deg, rgba(255,122,26,.10), rgba(229,37,42,.06) 55%, rgba(15,17,21,.9)), var(--panel);
+            border:1px solid rgba(255,122,26,.35); border-radius:6px; box-shadow:0 30px 90px rgba(0,0,0,.5); overflow:hidden; }
+  .dlcard::before { content:""; position:absolute; right:-70px; top:-70px; width:240px; height:240px; border-radius:50%;
+            background:radial-gradient(circle, transparent 0 28px, rgba(255,122,26,.22) 28px 30px, transparent 30px 52px, rgba(229,37,42,.2) 52px 54px, transparent 54px 76px, rgba(255,122,26,.14) 76px 78px, transparent 78px); }
+  .dlcard h2 { margin:6px 0 8px; font:800 clamp(24px,4vw,34px)/1.1 var(--display); text-transform:uppercase; letter-spacing:.03em; }
+  .dlcard p { margin:0 0 12px; color:#c9cdd4; font-size:18px; }
+  .meta { display:flex; flex-wrap:wrap; gap:8px; margin:0 0 12px; }
+  .meta span { font:700 12px var(--display); letter-spacing:.12em; padding:6px 10px; border:1px solid var(--line); background:rgba(7,8,10,.55); color:var(--text); border-radius:4px; text-transform:uppercase; }
+  .req { margin:0; padding:0; list-style:none; color:var(--dim); font-size:16px; }
+  .req li { padding-left:20px; position:relative; margin:3px 0; } .req li::before { content:""; position:absolute; left:2px; top:.55em; width:8px; height:8px; background:var(--orange); transform:rotate(45deg); }
+  .getit { position:relative; text-align:center; }
+  .btn.big { display:block; width:100%; padding:18px 22px; font-size:16px; text-decoration:none; text-align:center; }
+  .btn.off { filter:grayscale(1) brightness(.6); pointer-events:none; }
+  .note { margin-top:12px; color:#7f8791; font-size:14px; line-height:1.35; }
+
+  /* steps */
+  .steps { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:22px; }
+  .step { background:rgba(15,17,21,.82); border:1px solid var(--line); padding:16px 16px 14px; border-radius:4px; position:relative; }
+  .step b { display:block; font:800 13px var(--display); letter-spacing:.18em; color:var(--orange2); margin-bottom:6px; }
+  .step span { color:#d3d6dc; font-size:17px; }
+  .step::after { content:""; position:absolute; right:10px; top:10px; width:26px; height:26px; background:radial-gradient(circle at 50% 50%, transparent 0 4px, rgba(255,122,26,.5) 4px 5px, transparent 5px 9px, rgba(255,122,26,.35) 9px 10px, transparent 10px); border-radius:50%; }
+
+  .cloudbar { height:34px; margin:26px 0 8px; opacity:.9; background:#0a0b0d; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  footer { color:#6d747e; font-size:14px; text-align:center; padding-top:10px; }
+  footer a { color:#8d95a0; }
+
+  @media (max-width:860px) {
+    .art { height:520px; background-position:62% 0; }
+    .art::before { background:linear-gradient(0deg, rgba(7,8,10,1) 8%, rgba(7,8,10,.55) 55%, rgba(7,8,10,.25) 100%); }
+    .hero { padding-top:250px; min-height:0; } .hero > div { max-width:none; }
+    .steps { grid-template-columns:1fr; } .chips { display:none; } .dlcard { grid-template-columns:1fr; }
+  }
+  @media (prefers-reduced-motion:reduce) { *,*::before,*::after { animation:none !important; transition:none !important; } }
   [hidden] { display:none !important; }
 </style>
 </head>
 <body>
-<main class="card">
-  <h1>Tobi Panel key</h1>
-  <p id="intro">Your key is being made. Please wait a moment.</p>
+<canvas id="vortex" aria-hidden="true"></canvas>
+<div class="art" aria-hidden="true"></div>
+<div class="shade" aria-hidden="true"></div>
 
-  <section id="wait">
-    <div class="bar"><i id="fill"></i></div>
-    <div class="small" id="count">8</div>
+<!-- shared drawings -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="orangeFace" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffa347"/><stop offset=".55" stop-color="#ff7a1a"/><stop offset="1" stop-color="#c24a05"/></linearGradient>
+    <radialGradient id="eyeGlow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ff3b3b"/><stop offset=".6" stop-color="#b30f14"/><stop offset="1" stop-color="#3b0508"/></radialGradient>
+    <symbol id="cloud" viewBox="0 0 60 34"><path d="M10 28c-6 0-9-4-8-8 1-4 5-6 9-5 0-6 5-10 11-9 3-5 11-6 15-1 6-1 10 4 9 9 4 1 6 5 4 8-1 3-4 5-8 5z" fill="#d6262b" stroke="#f4f4f4" stroke-width="2.6" stroke-linejoin="round"/></symbol>
+  </defs>
+</svg>
+
+<div class="wrap" id="page">
+  <header class="top">
+    <div class="brand">
+      <svg viewBox="0 0 100 100" aria-hidden="true"><use href="#maskMini"/></svg>
+      <span>Tobi Panel</span>
+    </div>
+    <div class="chips">
+      <span class="chip red">Akatsuki Drop</span>
+      <span class="chip hot">Season 4.6 theme</span>
+      <span class="chip">Fan made</span>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div>
+      <div class="kicker"><i></i>Supply drop incoming</div>
+      <h1>Get your <em>key</em></h1>
+      <p class="sub">Hold your position. Your Tobi Panel key is on its way down.</p>
+      <div class="cta"><a class="btn" href="#panel">Get your key</a><a class="btn ghost" href="#download">Download the app</a></div>
+      <p class="quote" style="margin-top:26px">&ldquo;Winner winner&hellip; <b>no chicken dinner</b> today. The prize is a key, and the only thing you have to survive is eight seconds.&rdquo;</p>
+    </div>
+    <div class="cta-wrap" hidden></div>
   </section>
 
-  <section id="done" hidden>
-    <div class="key" id="key"></div>
-    <button id="copy" type="button">Copy key</button>
-    <div class="small" id="until"></div>
-    <div class="small">Paste it into Tobi Panel when it asks for a key.</div>
+  <main class="panel" id="panel">
+    <i class="c1"></i><i class="c2"></i>
+    <div class="hud" role="status" aria-live="polite">
+      <span class="dot"></span>
+      <span>Drop status <b id="state">Inbound</b></span>
+      <span>Zone <b>Erangel-46</b></span>
+      <span class="eta" id="eta">8</span>
+    </div>
+
+    <div class="scene" aria-hidden="true">
+      <div class="stars"></div><div class="ground"></div>
+      <div class="drop">
+        <svg viewBox="0 0 170 250" class="sway">
+          <g class="canopy">
+            <path d="M8 78 C8 30 52 6 85 6 C118 6 162 30 162 78 C150 70 140 70 128 78 C116 70 102 70 85 78 C68 70 54 70 42 78 C30 70 20 70 8 78Z" fill="#ff7a1a" stroke="#1b0d03" stroke-width="2"/>
+            <path d="M85 6 C70 30 66 56 68 78 M85 6 C100 30 104 56 102 78 M85 6 C45 20 32 52 42 78 M85 6 C125 20 138 52 128 78" fill="none" stroke="#7a2a00" stroke-width="2"/>
+            <path d="M42 78 C42 50 60 22 85 6 C60 24 56 54 68 78Z M102 78 C104 54 100 24 85 6 C112 22 128 48 128 78Z" fill="#101114" opacity=".85"/>
+          </g>
+          <g class="lines" stroke="#c9ccd2" stroke-width="1.4" opacity=".9">
+            <path d="M8 78 L62 168"/><path d="M42 78 L70 168"/><path d="M68 78 L78 168"/><path d="M102 78 L92 168"/><path d="M128 78 L100 168"/><path d="M162 78 L108 168"/>
+          </g>
+          <g transform="translate(55 164)">
+            <ellipse class="glow" cx="30" cy="2" rx="46" ry="14" fill="rgba(255,194,26,.35)"/>
+            <rect x="0" y="12" width="60" height="44" rx="3" fill="#2a2d33" stroke="#0a0b0d" stroke-width="2"/>
+            <path d="M0 24 H60 M0 44 H60" stroke="#ffc21a" stroke-width="5" stroke-dasharray="7 5"/>
+            <rect x="22" y="22" width="16" height="22" fill="#12141a" stroke="#ffc21a" stroke-width="2"/>
+            <g class="lid"><rect x="-2" y="0" width="64" height="12" rx="3" fill="#3a3e46" stroke="#0a0b0d" stroke-width="2"/><path d="M4 6 H56" stroke="#ffc21a" stroke-width="3"/></g>
+          </g>
+        </svg>
+      </div>
+      <div class="smoke"></div>
+    </div>
+
+    <div class="seg" id="seg" aria-hidden="true"></div>
+    <div class="status" id="status">Parachute deployed. Stand by.</div>
+
+    <div class="reveal" id="reveal">
+      <div class="keybox">
+        <small>Supply crate opened</small>
+        <div class="key" id="key"></div>
+      </div>
+      <div class="actions">
+        <button class="btn" id="copy" type="button">Copy key</button>
+        <button class="btn ghost" id="again" type="button">New drop</button>
+      </div>
+      <div class="until" id="until"></div>
+    </div>
+  </main>
+
+  <section class="dl" id="download">
+    <div class="dlcard">
+      <div>
+        <div class="kicker"><i></i>Download</div>
+        <h2>Tobi Panel for Windows</h2>
+        <p>The full app: the Apple style panel, the cleaner tools, the emulator and keymapping controls. One file, no installer.</p>
+        <div class="meta"><span id="dlVer">Latest version</span><span id="dlSize">About 25 MB</span><span id="dlDate" hidden></span></div>
+        <ul class="req">
+          <li>Windows 10 or 11, 64-bit</li>
+          <li>Run it as administrator (it changes GameLoop files)</li>
+          <li>GameLoop installed on the PC</li>
+        </ul>
+      </div>
+      <div class="getit">
+        <a class="btn big" id="dlBtn" href="#download" rel="noopener">Download Tobi Panel</a>
+        <div class="note" id="dlNote">Get a key above first. The app asks for it when it opens. Windows may show a SmartScreen or antivirus notice for apps that are not code-signed.</div>
+      </div>
+    </div>
   </section>
-</main>
+
+  <section class="steps" aria-label="How to use the key">
+    <div class="step"><b>01 / COPY</b><span>Copy the key from the crate.</span></div>
+    <div class="step"><b>02 / OPEN</b><span>Start Tobi Panel. It asks for a key when it needs one.</span></div>
+    <div class="step"><b>03 / UNLOCK</b><span>Paste the key and press Unlock. Done.</span></div>
+  </section>
+
+  <div class="cloudbar" aria-hidden="true"><svg width="100%" height="34" preserveAspectRatio="xMidYMid slice"><defs><pattern id="clouds" width="92" height="34" patternUnits="userSpaceOnUse"><use href="#cloud" x="4" y="0" width="60" height="34"/></pattern></defs><rect width="100%" height="34" fill="url(#clouds)"/></svg></div>
+  <footer>Fan-made page. Artwork belongs to its original artist. Not affiliated with or endorsed by the owners of Naruto or PUBG MOBILE. Keys work for 24 hours.</footer>
+</div>
+
+<!-- the mask, drawn once and reused -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="maskBig" viewBox="0 0 300 340">
+    <path d="M150 12 C226 12 280 76 276 172 C272 262 214 328 150 328 C86 328 28 262 24 172 C20 76 74 12 150 12Z" fill="url(#orangeFace)" stroke="#2a1405" stroke-width="5"/>
+    <clipPath id="faceClip"><path d="M150 12 C226 12 280 76 276 172 C272 262 214 328 150 328 C86 328 28 262 24 172 C20 76 74 12 150 12Z"/></clipPath>
+    <path id="spiralPath" clip-path="url(#faceClip)" fill="none" stroke="#7d2f05" stroke-width="5.5" stroke-linecap="round" opacity=".85"/>
+    <path d="M150 12 C226 12 280 76 276 172" fill="none" stroke="#fff" stroke-opacity=".28" stroke-width="5" stroke-linecap="round"/>
+    <circle cx="206" cy="150" r="30" fill="#14080a" stroke="#2a1405" stroke-width="4"/>
+    <circle cx="206" cy="150" r="22" fill="url(#eyeGlow)"/>
+    <circle cx="206" cy="150" r="6" fill="#0a0102"/>
+    <g fill="#0a0102"><circle cx="206" cy="132" r="4.6"/><circle cx="222" cy="159" r="4.6"/><circle cx="190" cy="159" r="4.6"/></g>
+    <circle cx="206" cy="150" r="22" fill="none" stroke="#ff6a6a" stroke-opacity=".5" stroke-width="1.5"/>
+  </symbol>
+  <symbol id="maskMini" viewBox="0 0 100 100">
+    <path d="M50 4 C76 4 94 26 92 58 C90 88 70 98 50 98 C30 98 10 88 8 58 C6 26 24 4 50 4Z" fill="url(#orangeFace)" stroke="#2a1405" stroke-width="3"/>
+    <circle cx="66" cy="48" r="10" fill="#14080a"/><circle cx="66" cy="48" r="7.5" fill="url(#eyeGlow)"/>
+    <path d="M50 14 C62 14 74 26 76 42 M50 22 C60 24 68 32 68 42 M50 30 C56 32 60 36 60 42" fill="none" stroke="#7d2f05" stroke-width="2.4" stroke-linecap="round"/>
+  </symbol>
+</svg>
 
 <script>
 "use strict";
@@ -126,27 +381,119 @@ function makeKey(nowSeconds) {
 
 // ---- the page ----
 const $ = id => document.getElementById(id);
-let left = WAIT_SECONDS;
-$("count").textContent = left + " s";
-const timer = setInterval(() => {
-  left--;
-  $("fill").style.width = ((WAIT_SECONDS - left) / WAIT_SECONDS * 100) + "%";
-  $("count").textContent = Math.max(left, 0) + " s";
-  if (left <= 0) {
-    clearInterval(timer);
-    const made = makeKey(Math.floor(Date.now() / 1000));
-    $("key").textContent = made.key;
-    $("until").textContent = "Works until " + made.until.toLocaleString();
-    $("wait").hidden = true; $("done").hidden = false;
-    $("intro").textContent = "Here is your key.";
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+// the spiral on the mask: it winds out of the eye hole over the whole face
+(function () {
+  let d = "";
+  for (let a = 0.5; a <= 6.2 * Math.PI; a += 0.1) {
+    const r = 34 + a * 7.4;
+    d += (d ? "L" : "M") + (206 + Math.cos(a) * r).toFixed(1) + " " + (150 + Math.sin(a) * r * 1.12).toFixed(1);
   }
-}, 1000);
-setTimeout(() => { $("fill").style.width = (1 / WAIT_SECONDS * 100) + "%"; }, 50);
+  const el = document.getElementById("spiralPath");
+  if (el) el.setAttribute("d", d);
+})();
+
+// the vortex behind everything (the Kamui swirl)
+(function () {
+  const c = $("vortex"), g = c.getContext("2d");
+  let w = 0, h = 0, t = 0, run = true;
+  const size = () => { const dpr = Math.min(devicePixelRatio || 1, 2); w = c.width = innerWidth * dpr; h = c.height = innerHeight * dpr; };
+  addEventListener("resize", size); size();
+  document.addEventListener("visibilitychange", () => { run = !document.hidden; if (run) frame(); });
+  function draw() {
+    g.fillStyle = "rgba(7,8,10,.18)"; g.fillRect(0, 0, w, h);
+    const cx = w * 0.72, cy = h * 0.32, R = Math.max(w, h) * 0.75;
+    g.globalCompositeOperation = "lighter";
+    for (let arm = 0; arm < 5; arm++) {
+      g.beginPath();
+      for (let i = 0; i < 120; i++) {
+        const f = i / 120, a = arm * 1.2566 + f * 7 - t * 0.25, r = f * f * R;
+        const x = cx + Math.cos(a) * r, y = cy + Math.sin(a) * r * 0.62;
+        i ? g.lineTo(x, y) : g.moveTo(x, y);
+      }
+      g.strokeStyle = arm % 2 ? "rgba(229,37,42,.10)" : "rgba(255,122,26,.09)";
+      g.lineWidth = Math.max(1, w / 900) * 2; g.stroke();
+    }
+    g.globalCompositeOperation = "source-over";
+    const gl = g.createRadialGradient(cx, cy, 0, cx, cy, R * 0.22);
+    gl.addColorStop(0, "rgba(0,0,0,.95)"); gl.addColorStop(.35, "rgba(120,14,18,.35)"); gl.addColorStop(1, "transparent");
+    g.fillStyle = gl; g.fillRect(0, 0, w, h);
+  }
+  function frame() { if (!run) return; t += 0.016; draw(); requestAnimationFrame(frame); }
+  g.fillStyle = "#07080a"; g.fillRect(0, 0, w, h);
+  if (reduce) { for (let i = 0; i < 60; i++) { t += 0.2; draw(); } } else frame();
+})();
+
+// the drop
+const seg = $("seg");
+for (let i = 0; i < 16; i++) seg.appendChild(document.createElement("i"));
+const segs = [...seg.children];
+const messages = [
+  "Parachute deployed. Stand by.", "Crate is dropping. Keep your head down.", "Signal flare spotted.",
+  "Almost on the ground.", "Brace for landing."
+];
+let raf = 0, startAt = 0, landed = false;
+
+function setProgress(p) {
+  $("panel").style.setProperty("--p", p.toFixed(3));
+  const on = Math.round(p * 16);
+  segs.forEach((s, i) => s.classList.toggle("on", i < on));
+  $("eta").textContent = Math.max(0, Math.ceil(WAIT_SECONDS * (1 - p)));
+  $("status").textContent = messages[Math.min(messages.length - 1, Math.floor(p * messages.length))];
+}
+function land() {
+  landed = true;
+  const made = makeKey(Math.floor(Date.now() / 1000));
+  $("key").textContent = made.key;
+  $("until").textContent = "Works until " + made.until.toLocaleString();
+  $("panel").classList.add("landed");
+  $("state").textContent = "Landed";
+  $("eta").textContent = "OK";
+  $("status").textContent = "Crate opened. Grab your key.";
+  segs.forEach(s => s.classList.add("on"));
+  $("panel").style.setProperty("--p", "1");
+}
+function begin() {
+  cancelAnimationFrame(raf);
+  landed = false;
+  $("panel").classList.remove("landed");
+  $("state").textContent = "Inbound";
+  $("copy").textContent = "Copy key";
+  startAt = performance.now();
+  const tick = now => {
+    const p = Math.min(1, (now - startAt) / (WAIT_SECONDS * 1000));
+    setProgress(p);
+    if (p >= 1) land(); else raf = requestAnimationFrame(tick);
+  };
+  raf = requestAnimationFrame(tick);
+}
+$("again").addEventListener("click", begin);
 $("copy").addEventListener("click", async () => {
-  try { await navigator.clipboard.writeText($("key").textContent); $("copy").textContent = "Copied"; }
+  const text = $("key").textContent;
+  try { await navigator.clipboard.writeText(text); $("copy").textContent = "Copied"; }
   catch (e) { const r = document.createRange(); r.selectNodeContents($("key")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); $("copy").textContent = "Press Ctrl+C"; }
-  setTimeout(() => { $("copy").textContent = "Copy key"; }, 2000);
+  setTimeout(() => { $("copy").textContent = "Copy key"; }, 2200);
 });
+
+// the download button: the app file that sits next to this page (downloads/Tobi-Panel.exe), with its size and date
+(function () {
+  const FILE = "downloads/Tobi-Panel.exe";
+  const btn = $("dlBtn");
+  btn.href = FILE;
+  btn.setAttribute("download", "Tobi-Panel.exe");
+  fetch(FILE, { method: "HEAD", cache: "no-store" })
+    .then(r => {
+      if (!r.ok) throw new Error(r.status);
+      const len = Number(r.headers.get("content-length"));
+      if (len > 0) $("dlSize").textContent = (len / 1048576).toFixed(1) + " MB";
+      const lm = r.headers.get("last-modified");
+      if (lm) { $("dlDate").textContent = "Updated " + new Date(lm).toLocaleDateString(); $("dlDate").hidden = false; }
+    })
+    .catch(() => { $("dlNote").textContent = "If the download does not start, the file is not published yet. Come back soon."; });
+})();
+
+begin();
 </script>
 </body>
 </html>
