@@ -1,7 +1,7 @@
 tobi-update 1
-version=1.0.3
+version=1.0.4
 min=0
 file=TobiPanel.exe
-sha256=8537ae39884e3c8cc355ab6458b79ee73fe036015b4fc876b9cbb28037997e20
-size=7029760
-note=Keymapping sets are now stored encrypted on the site,Process Agent: priority and CPU affinity of any process
+sha256=08f5731f35db0f4bdbb16694bd2e6c57c846b9f753c357c4650d8ad56a8d64a2
+size=9476096
+note=Side-loading: no more flicker, one status orb, Detect button always visible,Process Agent: priority and CPU affinity for any process,Custom memory, cores, resolution and DPI,Keymapping sets stored encrypted
