@@ -162,12 +162,22 @@
   }
   @media (prefers-reduced-motion:reduce) { *,*::before,*::after { animation:none !important; transition:none !important; } }
   [hidden] { display:none !important; }
+
+  /* mouse trail + click ping (desktop with a mouse only; see JS guard) */
+  #cursorfx { position:fixed; inset:0; width:100%; height:100%; z-index:5; pointer-events:none; mix-blend-mode:screen; }
+
+  /* a soft light that follows the cursor over a button, like a flashlight across its face */
+  .btn { position:relative; isolation:isolate; }
+  .btn::after { content:""; position:absolute; inset:0; pointer-events:none; opacity:0; transition:opacity .25s;
+                background:radial-gradient(140px circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,.45), transparent 62%); mix-blend-mode:overlay; }
+  .btn:hover::after { opacity:1; }
 </style>
 </head>
 <body>
 <canvas id="vortex" aria-hidden="true"></canvas>
 <div class="art" aria-hidden="true"></div>
 <div class="shade" aria-hidden="true"></div>
+<canvas id="cursorfx" aria-hidden="true"></canvas>
 
 <!-- shared drawings -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -378,6 +388,75 @@ function makeKey(nowSeconds) {
 // ---- the page ----
 const $ = id => document.getElementById(id);
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const hasMouse = matchMedia("(pointer: fine)").matches;   // skip the cursor effects on touch
+
+// a trail of embers follows the pointer as it moves, and a ring pings out on every click
+if (hasMouse && !reduce) (function () {
+  const c = $("cursorfx"), g = c.getContext("2d");
+  let w = 0, h = 0, dpr = 1;
+  const size = () => { dpr = Math.min(devicePixelRatio || 1, 2); w = c.width = innerWidth * dpr; h = c.height = innerHeight * dpr; };
+  addEventListener("resize", size); size();
+
+  let particles = [], rings = [];
+  let lastX = -1, lastY = -1;
+
+  addEventListener("pointermove", e => {
+    const x = e.clientX * dpr, y = e.clientY * dpr;
+    if (lastX < 0) { lastX = x; lastY = y; }
+    const dist = Math.hypot(x - lastX, y - lastY);
+    const steps = Math.min(5, Math.max(1, Math.floor(dist / 16)));
+    for (let i = 1; i <= steps; i++) {
+      const t = i / steps;
+      particles.push({
+        x: lastX + (x - lastX) * t, y: lastY + (y - lastY) * t,
+        r: 1.6 + Math.random() * 2.0, a: 0.5 + Math.random() * 0.3,
+        vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3 - 0.12,
+        hue: Math.random() < 0.5 ? "255,122,26" : "229,37,42",
+        life: 0, maxLife: 24 + Math.random() * 14,
+      });
+    }
+    lastX = x; lastY = y;
+    if (particles.length > 140) particles.splice(0, particles.length - 140);
+  }, { passive: true });
+
+  addEventListener("pointerdown", e => {
+    rings.push({ x: e.clientX * dpr, y: e.clientY * dpr, r: 2 * dpr, a: 0.85 });
+  });
+
+  function frame() {
+    g.clearRect(0, 0, w, h);
+    g.globalCompositeOperation = "lighter";
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      p.life++; p.x += p.vx; p.y += p.vy;
+      const t = p.life / p.maxLife;
+      if (t >= 1) { particles.splice(i, 1); continue; }
+      const a = p.a * (1 - t), rad = p.r * (1 - t * 0.35) * 5;
+      const grad = g.createRadialGradient(p.x, p.y, 0, p.x, p.y, rad);
+      grad.addColorStop(0, `rgba(${p.hue},${a})`); grad.addColorStop(1, `rgba(${p.hue},0)`);
+      g.fillStyle = grad; g.beginPath(); g.arc(p.x, p.y, rad, 0, Math.PI * 2); g.fill();
+    }
+    g.globalCompositeOperation = "source-over";
+    for (let i = rings.length - 1; i >= 0; i--) {
+      const r = rings[i];
+      r.r += 3.4 * dpr; r.a -= 0.032;
+      if (r.a <= 0) { rings.splice(i, 1); continue; }
+      g.strokeStyle = `rgba(255,154,61,${r.a})`; g.lineWidth = 1.6 * dpr;
+      g.beginPath(); g.arc(r.x, r.y, r.r, 0, Math.PI * 2); g.stroke();
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+
+// a soft light follows the cursor across whichever button it sits over
+if (hasMouse) document.addEventListener("pointermove", e => {
+  const btn = e.target.closest(".btn");
+  if (!btn) return;
+  const r = btn.getBoundingClientRect();
+  btn.style.setProperty("--mx", (e.clientX - r.left) + "px");
+  btn.style.setProperty("--my", (e.clientY - r.top) + "px");
+}, { passive: true });
 
 // the spiral on the mask: it winds out of the eye hole over the whole face
 (function () {
