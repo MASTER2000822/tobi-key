@@ -1,0 +1,7 @@
+tobi-update 1
+version=1.0.0
+min=0
+file=TobiPanel.exe
+sha256=28af663b469ded60c0e0420e4b2972fac1babd530d2900b8a81c60822ba1319c
+size=6973440
+note=Update system, font choice, Screen Helper, HDR look, saved Appearance
