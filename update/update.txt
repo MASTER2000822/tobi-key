@@ -1,7 +1,7 @@
 tobi-update 1
-version=1.0.1
+version=1.0.2
 min=0
 file=TobiPanel.exe
-sha256=a2f4b581eae91d7b299f170630ce6e5080ac3e5d97673fe5b7340c775fcf2db3
-size=6975488
-note=Language switch no longer flickers,Arabic name fixed in the language menu
+sha256=4d68e4532c1fbe77958395e9375f5597d32d9137d035d4a94cba59899ea56da9
+size=6980608
+note=Custom memory, cores, resolution and DPI,OpenGL start: Xiaomi 22081212C and the OpenGL launch command,Language switch fixes
