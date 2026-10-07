@@ -1,7 +1,7 @@
 tobi-update 1
-version=1.0.0
+version=1.0.1
 min=0
 file=TobiPanel.exe
-sha256=28af663b469ded60c0e0420e4b2972fac1babd530d2900b8a81c60822ba1319c
-size=6973440
-note=Update system, font choice, Screen Helper, HDR look, saved Appearance
+sha256=a2f4b581eae91d7b299f170630ce6e5080ac3e5d97673fe5b7340c775fcf2db3
+size=6975488
+note=Language switch no longer flickers,Arabic name fixed in the language menu
