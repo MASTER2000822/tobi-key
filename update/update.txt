@@ -1,7 +1,7 @@
 tobi-update 1
-version=1.0.2
+version=1.0.3
 min=0
 file=TobiPanel.exe
-sha256=4d68e4532c1fbe77958395e9375f5597d32d9137d035d4a94cba59899ea56da9
-size=6980608
-note=Custom memory, cores, resolution and DPI,OpenGL start: Xiaomi 22081212C and the OpenGL launch command,Language switch fixes
+sha256=8537ae39884e3c8cc355ab6458b79ee73fe036015b4fc876b9cbb28037997e20
+size=7029760
+note=Keymapping sets are now stored encrypted on the site,Process Agent: priority and CPU affinity of any process
