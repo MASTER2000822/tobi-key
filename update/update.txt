@@ -1,7 +1,7 @@
 tobi-update 1
-version=1.0.4
+version=1.0.5
 min=0
 file=TobiPanel.exe
-sha256=08f5731f35db0f4bdbb16694bd2e6c57c846b9f753c357c4650d8ad56a8d64a2
-size=9476096
-note=Side-loading: no more flicker, one status orb, Detect button always visible,Process Agent: priority and CPU affinity for any process,Custom memory, cores, resolution and DPI,Keymapping sets stored encrypted
+sha256=02dc351f3eedd79af99a4243c2b0d3344bbefe79e91e55ec4e01d397f49187fd
+size=9483776
+note=Visual Enhancement keeps running after Tobi Panel closes,Process Agent: fixed a scrolling slowdown,Package installer: a Cancel button and clearer results,Fixed: an install result no longer shows in the Airdropping section,Fixed: the app could hang on exit while adb could not connect,New phone model: Samsung Galaxy Tab S9 Ultra
