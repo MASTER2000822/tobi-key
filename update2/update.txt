@@ -1,0 +1,9 @@
+tobi-update 1
+version=1.0.8
+min=0
+file=TobiPanel.exe
+sha256=405d2659c350d23b6478f578dd4b599e5fe5a891355eedb9f4dd5bd9fa8dd9cd
+size=8036864
+note=New: Diagnostics & Setup page (Environment Test, Prepare the environment, Windows virtualization switch for the old and new GameLoop)
+note=New GameLoop: render resolution, per-app settings that save reliably, apps list shows only what is installed, controls for PUBG Korea
+note=Fewer flickers and glitches across the pages; the restore from minimize no longer blinks
