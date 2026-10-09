@@ -1,9 +1,7 @@
 tobi-update 1
-version=1.0.8
+version=1.0.9
 min=0
 file=TobiPanel.exe
-sha256=405d2659c350d23b6478f578dd4b599e5fe5a891355eedb9f4dd5bd9fa8dd9cd
-size=8036864
-note=New: Diagnostics & Setup page (Environment Test, Prepare the environment, Windows virtualization switch for the old and new GameLoop)
-note=New GameLoop: render resolution, per-app settings that save reliably, apps list shows only what is installed, controls for PUBG Korea
-note=Fewer flickers and glitches across the pages; the restore from minimize no longer blinks
+sha256=8add064e776f0539ca1cc06fed94bb5d174314acc9d21afaf4c9155c2d07bc0c
+size=8049152
+note=New: Virtual memory section in Diagnostics & Setup: one button makes Windows' page file bigger (fixes GameLoop's 'running out of virtual memory' message)
