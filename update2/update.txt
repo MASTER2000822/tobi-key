@@ -1,7 +1,7 @@
 tobi-update 1
-version=1.0.9
+version=1.0.10
 min=0
 file=TobiPanel.exe
-sha256=8add064e776f0539ca1cc06fed94bb5d174314acc9d21afaf4c9155c2d07bc0c
-size=8049152
-note=New: Virtual memory section in Diagnostics & Setup: one button makes Windows' page file bigger (fixes GameLoop's 'running out of virtual memory' message)
+sha256=482cc3dae3d1828ed78905a2fcb45306d9de9d970fcf916c6d70930c14ee5ef3
+size=8084992
+note=New: Text size on the Appearance page (85% to 175%), the window grows with it so nothing is squeezed,New: drag and drop APK/OBB files to install them, and other files to send them to the emulator,Backup and restore of game data as one archive with real progress; real percentages for installs, push and pull,Scrollbar can be grabbed and dragged reliably; no 'emulator not running' message when the app opens
